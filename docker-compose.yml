@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # --- Database Service --
+  market-db:
+    image: postgres:15
+    container_name: market-postgres-container
+    environment:
+      POSTGRES_DB: MarketWatcherDB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-132579}
+    ports:
+      - "5438:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d MarketWatcherDB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # --- Application Service ---
+  market-app:
+    build: .
+    container_name: market-app-container
+    ports:
+      - "8080:8080"
+    depends_on:
+      market-db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://market-db:5432/MarketWatcherDB
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-132579}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+volumes:
+  postgres_data:
