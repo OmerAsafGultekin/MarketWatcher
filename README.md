@@ -1,6 +1,6 @@
 # Real-Time Crypto Trend Analysis (MarketWatcher)
 
-A backend service built with Java 21 and Spring Boot that tracks cryptocurrency prices in real-time, calculates Simple Moving Average (SMA), and determines market trends.
+A backend service built with Java 21 and Spring Boot that tracks cryptocurrency prices in real-time, calculates Simple Moving Average, and determines market trends.
 
 ## Motivation
 As a 2nd-year computer engineering student, I built this project to move beyond standard CRUD applications. My goal was to gain hands-on experience with scheduled background tasks, asynchronous external API calls, in-memory data structures, and containerization using Docker and PostgreSQL.
